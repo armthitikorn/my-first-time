@@ -3,126 +3,104 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>แบบทดสอบเสียง</title>
+    <title>ใบประกาศนียบัตร</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
 
-        body { 
-            font-family: 'Sarabun', sans-serif; 
-            padding: 20px; 
-            max-width: 800px; 
-            margin: auto; 
+        body {
+            font-family: 'Sarabun', sans-serif;
             background-color: #f4f7f6;
             color: #333;
             line-height: 1.6;
+            padding: 20px;
         }
-        h2 { 
-            text-align: center; 
-            color: #007acc; 
-            margin-bottom: 20px; 
-        }
-        .section { 
-            margin-bottom: 20px; 
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .question { 
-            font-size: 1.1em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #555;
-        }
-        audio { 
-            display: block; 
-            width: 100%;
-            margin-top: 10px; 
-            border-radius: 5px;
-        }
-        button { 
-            padding: 12px 20px; 
-            background-color: #007acc; 
-            color: white; 
-            border: none; 
-            border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover { 
-            background-color: #005fa3; 
-        }
-        #submitBtn {
-            display: block;
-            margin: 30px auto 0;
-            width: 50%;
-        }
-        /* ปรับปรุง CSS สำหรับการแสดงผลใบประกาศ */
+
         #certificate-container {
-            display: none;
-            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             text-align: center;
         }
-        #certificate { 
-            padding: 40px; 
+
+        #certificate {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16 / 11; /* A standard landscape ratio */
+            padding: 5% 7%; /* Responsive padding */
+            box-sizing: border-box;
             background: linear-gradient(135deg, #e6f7ff, #f0faff);
             border-radius: 15px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
             border: 2px solid #007acc;
             animation: fadeIn 1s ease-in-out;
-            /* เพิ่มความกว้างและความสูงเพื่อให้ภาพที่ได้มีสัดส่วนที่ชัดเจน */
-            width: 700px;
-            height: 500px;
-            margin: auto;
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
+        
         #certificate h3 {
-            font-size: 2.5em;
+            font-size: clamp(1.5rem, 4vw, 3rem);
             color: #d4af37;
             margin: 0 0 10px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
+        
         #certificate p {
-            font-size: 1.2em;
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
             color: #555;
+            margin: 0;
         }
+        
         #userName {
-            font-size: 2em;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
             font-weight: bold;
             color: #004d99;
-            margin: 20px 0;
+            margin: clamp(10px, 3vw, 20px) 0;
             display: block;
         }
+        
         .certificate-text {
-            font-size: 1.5em;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
             color: #333;
         }
+        
         .certificate-footer {
-            font-size: 0.9em;
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
             color: #777;
-            margin-top: 30px;
+            margin-top: clamp(20px, 5vw, 30px);
         }
+
         .download-button {
             margin-top: 20px;
-            /* ทำให้ปุ่มดาวน์โหลดอยู่นอกพื้นที่ใบประกาศ */
+            padding: 12px 20px;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
         }
+        
+        .download-button:hover {
+            background-color: #005fa3;
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Hide audio questions container */
+        #quizContainer { display: none; }
     </style>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
-    <div id="quizContainer">
-        <h2>หน้าที่ 4: แบบทดสอบการตอบข้อโต้แย้งด้วยเสียง</h2>
-        <p>กรุณากดปุ่มบันทึกเสียงและพูดคำตอบของคุณให้ครบ 20 ข้อ</p>
-
-        <div id="audioQuestions"></div>
-        <button id="submitBtn" onclick="checkCompletion()">ส่งแบบทดสอบ</button>
-    </div>
-
     <div id="certificate-container">
         <div id="certificate">
             <h3>ใบประกาศนียบัตร</h3>
@@ -138,107 +116,16 @@
     </div>
 
     <script>
-        const audioContainer = document.getElementById("audioQuestions");
-        const questions = [
-            // คำปฏิเสธต้นสาย 10 ข้อ
-            "1. ไม่มีเวลาคุย", "2. ไม่สนใจ", "3. ไม่ได้ซื้อกับคนไม่รู้จัก", "4. มีเยอะแล้ว", "5. ไม่ว่าง",
-            "6. ซื้อไปแล้ว", "7. ขอเก็บเบอร์ไว้อีกเบอร์แล้วกัน", "8. มีตัวแทนที่ดูแลอยู่แล้ว", "9. ไม่สะดวกฟัง",
-            "10. ขออนุญาตวางสาย",
-            // คำปฏิเสธที่จะซื้อประกันตอนปิดการขาย 10 ข้อ
-            "11. ขอปรึกษาที่บ้านก่อน", "12. ขอคิดดูก่อน", "13. ขอเปรียบเทียบกับที่อื่นก่อน", "14. ยังไม่มีเงิน",
-            "15. ขอรายละเอียดไปอ่านก่อน", "16. อยากได้ที่ผลตอบแทนสูงกว่านี้", "17. เบี้ยแพงไป", "18. ไม่เอาครับ/ค่ะ",
-            "19. ขอปรึกษาเพื่อนก่อน", "20. ขอเลื่อนไปก่อน"
-        ];
-
-        questions.forEach((q, i) => {
-            const div = document.createElement("div");
-            div.className = "section";
-            div.innerHTML = `
-                <div class="question">${q}</div>
-                <button id="btn${i}" onclick="toggleRecording(${i})">เริ่มบันทึกเสียง</button>
-                <audio id="audio${i}" controls></audio>
-            `;
-            audioContainer.appendChild(div);
-        });
-
-        const mediaRecorders = new Array(20);
-        const audioChunksArray = new Array(20);
-        const recordings = Array(20).fill(false);
-        const submitBtn = document.getElementById('submitBtn');
-
-        function toggleRecording(index) {
-            const btn = document.getElementById(`btn${index}`);
-            
-            if (mediaRecorders[index] && mediaRecorders[index].state === "recording") {
-                mediaRecorders[index].stop();
-                btn.textContent = `เริ่มบันทึกเสียง`;
-                return;
-            }
-
-            navigator.mediaDevices.getUserMedia({ audio: true })
-                .then(stream => {
-                    const mediaRecorder = new MediaRecorder(stream);
-                    mediaRecorders[index] = mediaRecorder;
-                    audioChunksArray[index] = [];
-
-                    mediaRecorder.ondataavailable = event => {
-                        audioChunksArray[index].push(event.data);
-                    };
-
-                    mediaRecorder.onstop = () => {
-                        const audioBlob = new Blob(audioChunksArray[index], { type: 'audio/webm' });
-                        const audioUrl = URL.createObjectURL(audioBlob);
-                        const audio = document.getElementById(`audio${index}`);
-                        audio.src = audioUrl;
-                        recordings[index] = true;
-
-                        const formData = new FormData();
-                        formData.append('audio', audioBlob, `voice_q${index + 1}.webm`);
-                        formData.append('question', questions[index]);
-                        formData.append('userFullName', localStorage.getItem('userFullName'));
-                        formData.append('page', 'page4');
-
-                        fetch('save_audio.php', {
-                            method: 'POST',
-                            body: formData
-                        }).then(res => {
-                            if (!res.ok) throw new Error('Upload failed');
-                        }).catch(err => {
-                            alert('เกิดข้อผิดพลาดในการอัปโหลดเสียง: ' + err.message);
-                        });
-
-                        stream.getTracks().forEach(track => track.stop());
-                    };
-
-                    mediaRecorder.start();
-                    btn.textContent = `หยุดบันทึกเสียง`;
-                })
-                .catch(err => {
-                    alert("ไม่สามารถเข้าถึงไมโครโฟนได้: " + err.message);
-                });
-        }
-
-        function checkCompletion() {
-            const allRecorded = recordings.every(done => done);
-            if (!allRecorded) {
-                alert("กรุณาบันทึกเสียงให้ครบทั้ง 20 ข้อก่อนส่งแบบทดสอบ");
-                return;
-            }
-            showCertificate();
-        }
-
-        function showCertificate() {
-            const quizContainer = document.getElementById("quizContainer");
-            const certContainer = document.getElementById("certificate-container");
-            
-            quizContainer.style.display = "none";
-            certContainer.style.display = "block";
-            
+        document.addEventListener('DOMContentLoaded', () => {
             const userName = localStorage.getItem('userFullName');
             if (userName) {
                 document.getElementById('userName').textContent = userName;
+            } else {
+                // Redirect back if user name is not found
+                // window.location.href = 'index.html';
+                console.error("User name not found in localStorage.");
             }
-        }
+        });
 
         function downloadCertificate() {
             const certificateElement = document.getElementById('certificate');
