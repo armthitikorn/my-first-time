@@ -2,214 +2,129 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>แบบทดสอบอัตนัย</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>แบบทดสอบปรนัยการขายประกันผ่านโทรศัพท์</title>
     <style>
         body {
             font-family: 'Sarabun', sans-serif;
-            padding: 30px;
             max-width: 900px;
-            margin: auto;
-            background-color: #f0f8ff;
+            margin: 30px auto;
+            background-color: #f9faff;
             color: #333;
+            padding: 20px;
         }
         h2 {
+            color: #004080;
             text-align: center;
-            color: #0059b3;
-            margin-bottom: 20px;
-        }
-        .question-group {
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 123, 255, 0.1);
+            margin-bottom: 30px;
         }
         .question {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px 20px;
             margin-bottom: 20px;
         }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #444;
+        .question h3 {
+            color: #0059b3;
+            margin-bottom: 10px;
         }
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-            resize: vertical;
-            min-height: 80px;
+        .choices label {
+            display: block;
+            margin-left: 20px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 1rem;
         }
         button {
-            margin-top: 25px;
-            padding: 12px 20px;
             background-color: #007acc;
             color: white;
             border: none;
             border-radius: 6px;
-            font-size: 1.1em;
+            padding: 12px 25px;
+            font-size: 1.1rem;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: background-color 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
             display: block;
             width: 100%;
             max-width: 300px;
-            margin: 25px auto 0;
+            margin-left: auto;
+            margin-right: auto;
         }
         button:hover {
             background-color: #005fa3;
         }
+        .hidden {
+            display: none;
+        }
+        #result {
+            background-color: #d1ffd1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-size: 1.2rem;
+            text-align: center;
+            color: #005900;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0,150,0,0.3);
+        }
     </style>
 </head>
 <body>
-    <h2>แบบทดสอบอัตนัย (20 ข้อ)</h2>
-    <form id="essayForm">
-        <div class="question-group">
-            <div class="question">
-                <label for="q1">1. อธิบายขั้นตอนการนำเสนอขายประกันสุขภาพให้ลูกค้าทางโทรศัพท์</label>
-                <textarea id="q1" name="q1" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q2">2. หากลูกค้ามีข้อโต้แย้งเรื่องเบี้ยประกันแพง คุณจะตอบกลับอย่างไร</label>
-                <textarea id="q2" name="q2" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q3">3. คุณจะจัดการกับลูกค้าที่บอกว่า "ไม่สนใจ" ตั้งแต่แรกได้อย่างไร</label>
-                <textarea id="q3" name="q3" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q4">4. การสร้างความน่าเชื่อถือให้กับลูกค้าทางโทรศัพท์ทำได้อย่างไร</label>
-                <textarea id="q4" name="q4" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q5">5. ลูกค้าบอกว่า "ขอคิดดูก่อน" คุณจะปิดการขายด้วยวิธีไหน</label>
-                <textarea id="q5" name="q5" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q6">6. ข้อแตกต่างระหว่างประกันชีวิตกับประกันสุขภาพคืออะไร</label>
-                <textarea id="q6" name="q6" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q7">7. การพูดคุยกับลูกค้าด้วยความมั่นใจมีผลอย่างไรต่อการขาย</label>
-                <textarea id="q7" name="q7" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q8">8. คุณจะนำเสนอแผนประกันที่ลูกค้าต้องการแต่ไม่ตรงกับเป้าหมายการขายของคุณอย่างไร</label>
-                <textarea id="q8" name="q8" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q9">9. หากลูกค้าไม่เข้าใจในเงื่อนไขกรมธรรม์ที่ซับซ้อน คุณจะอธิบายอย่างไร</label>
-                <textarea id="q9" name="q9" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q10">10. การบันทึกข้อมูลลูกค้าหลังการโทรมีความสำคัญอย่างไร</label>
-                <textarea id="q10" name="q10" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q11">11. คุณจะสร้างความสัมพันธ์กับลูกค้าในระยะยาวได้อย่างไร</label>
-                <textarea id="q11" name="q11" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q12">12. สิ่งที่ควรหลีกเลี่ยงในการพูดคุยกับลูกค้าทางโทรศัพท์มีอะไรบ้าง</label>
-                <textarea id="q12" name="q12" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q13">13. การฟังอย่างตั้งใจ (Active Listening) มีความสำคัญอย่างไร</label>
-                <textarea id="q13" name="q13" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q14">14. คุณจะรับมือกับลูกค้าที่แสดงอารมณ์โกรธหรือหงุดหงิดได้อย่างไร</label>
-                <textarea id="q14" name="q14" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q15">15. การนัดหมายเพื่อติดตามผล (Follow-up) ควรทำอย่างไร</label>
-                <textarea id="q15" name="q15" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q16">16. คุณจะใช้คำถามปลายเปิดเพื่อดึงดูดความสนใจของลูกค้าได้อย่างไร</label>
-                <textarea id="q16" name="q16" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q17">17. สิ่งที่คุณควรเตรียมตัวก่อนโทรหาลูกค้าแต่ละครั้งคืออะไร</label>
-                <textarea id="q17" name="q17" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q18">18. คุณจะสรุปการสนทนาและยืนยันความเข้าใจของลูกค้าก่อนจบการโทรได้อย่างไร</label>
-                <textarea id="q18" name="q18" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q19">19. ประกันสะสมทรัพย์มีประโยชน์อย่างไรต่อลูกค้า</label>
-                <textarea id="q19" name="q19" required></textarea>
-            </div>
-            <div class="question">
-                <label for="q20">20. คุณคิดว่าสิ่งสำคัญที่สุดในการขายประกันทางโทรศัพท์คืออะไร</label>
-                <textarea id="q20" name="q20" required></textarea>
-            </div>
-        </div>
-        <button id="submitBtn" type="submit">ส่งคำตอบและไปหน้าสุดท้าย</button>
-    </form>
-    
+
+    <h2>แบบทดสอบปรนัย: การขายประกันชีวิตและสุขภาพผ่านทางโทรศัพท์ (50 ข้อ)</h2>
+
+    <form id="quizForm"></form>
+
+    <button id="submitBtn">ส่งคำตอบ</button>
+
+    <div id="result" class="hidden"></div>
+
     <script>
-        const form = document.getElementById('essayForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const userFullName = localStorage.getItem('userFullName');
-
-        // ตรวจสอบว่ามีชื่อผู้ใช้หรือไม่
-        if (!userFullName) {
-            window.location.href = 'page1.html';
-        }
-
-        submitBtn.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            const essayAnswers = {};
-            let allAnswered = true;
-
-            for (let i = 1; i <= 20; i++) {
-                const textarea = document.getElementById(`q${i}`);
-                if (textarea.value.trim() === '') {
-                    allAnswered = false;
-                    break;
-                }
-                essayAnswers[`q${i}`] = textarea.value.trim();
-            }
-
-            if (!allAnswered) {
-                alert('กรุณาตอบคำถามให้ครบทุกข้อก่อนส่งคำตอบ');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('userFullName', userFullName);
-            formData.append('essayAnswers', JSON.stringify(essayAnswers));
-            
-            fetch('save_data.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.status === 'success') {
-                    console.log('Essay answers saved successfully.');
-                    alert('ส่งคำตอบเรียบร้อยแล้ว');
-                    window.location.href = 'page4.html';
-                } else {
-                    console.error('Error:', data.message);
-                    alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล กรุณาลองใหม่อีกครั้ง');
-                }
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                alert('เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต');
-            });
-        });
-    </script>
-</body>
-</html>
+        const questions = [
+            { q: "1. ข้อใดคือเป้าหมายหลักของการขายประกันผ่านโทรศัพท์", a: "B", choices: ["สร้างความสัมพันธ์", "ปิดการขาย", "ให้ข้อมูลเท่านั้น", "สอบถามความสนใจ"] },
+            { q: "2. สิ่งที่ควรทำเมื่อเริ่มโทรหาลูกค้าคืออะไร", a: "A", choices: ["แนะนำตัวและชื่อบริษัท", "ถามคำถามทันที", "อธิบายผลิตภัณฑ์เลย", "ถามถึงรายได้ลูกค้า"] },
+            { q: "3. น้ำเสียงที่เหมาะสมในการโทรคือแบบใด", a: "D", choices: ["จริงจัง", "เร่งรีบ", "พูดเร็ว", "ชัดเจนและเป็นมิตร"] },
+            { q: "4. ควรทำอย่างไรหากลูกค้าไม่เข้าใจเงื่อนไข", a: "A", choices: ["อธิบายด้วยภาษาง่าย", "ข้ามไป", "พูดเสียงเบา", "อ่านจากสคริปต์อย่างเดียว"] },
+            { q: "5. ข้อใดคือพฤติกรรมที่ไม่เหมาะสมในการโทร", a: "A", choices: ["พูดแทรกลูกค้า", "ฟังลูกค้าก่อน", "อธิบายด้วยความชัดเจน", "ตั้งใจฟังคำถาม"] },
+            { q: "6. หลักการพูดเพื่อโน้มน้าวใจลูกค้าคืออะไร", a: "D", choices: ["เสนอราคาเท่านั้น", "พูดเร็ว", "พูดคนเดียว", "ตั้งคำถามเปิด"] },
+            { q: "7. จุดเด่นของประกันสุขภาพคืออะไร", a: "B", choices: ["ไม่มีเบี้ย", "ความคุ้มครองค่ารักษาพยาบาล", "รับผลตอบแทนสูง", "เหมือนเงินฝาก"] },
+            { q: "8. การติดตามลูกค้าในกรณีไม่รับสายควรทำอย่างไร", a: "A", choices: ["โทรใหม่ตามเวลาที่เหมาะสม", "โทรติดๆ กันหลายครั้ง", "ส่งข้อความทันที", "เลิกติดต่อลูกค้า"] },
+            { q: "9. ประโยชน์ของประกันสะสมทรัพย์คืออะไร", a: "B", choices: ["ไม่มีความแน่นอน", "เก็บออมและคุ้มครอง", "เสี่ยงสูง", "ใช้ได้กับผู้สูงอายุเท่านั้น"] },
+            { q: "10. ข้อมูลใดควรแจ้งกับลูกค้า", a: "B", choices: ["ข้อมูลคู่แข่ง", "ชื่อบริษัท และข้อมูลผลิตภัณฑ์", "ความเห็นส่วนตัว", "ข้อมูลการเมือง"] },
+            { q: "11. การยืนยันความเข้าใจของลูกค้าคือขั้นตอนไหน", a: "A", choices: ["ก่อนจบการนำเสนอ", "เริ่มต้นบทสนทนา", "หลังทักทาย", "หลังเสนอราคา"] },
+            { q: "12. วัตถุประสงค์หลักของประกันสะสมทรัพย์คืออะไร", a: "D", choices: ["คุ้มครองสุขภาพ", "สร้างภาระ", "ไม่มีผลตอบแทน", "ลดหย่อนภาษี"] },
+            { q: "13. สิ่งใดควรหลีกเลี่ยงในการพูดคุยกับลูกค้า", a: "A", choices: ["ข่มขู่", "ให้ข้อมูลครบถ้วน", "น้ำเสียงนุ่มนวล", "ฟังลูกค้า"] },
+            { q: "14. การแสดงความใส่ใจต่อลูกค้าเป็นอย่างไร", a: "C", choices: ["พูดให้จบเร็ว", "ใช้คำศัพท์เฉพาะ", "ถามความต้องการของลูกค้า", "เสนอแต่แผนราคาแพง"] },
+            { q: "15. ควรปิดการขายในจังหวะใด", a: "B", choices: ["เมื่อเริ่มโทร", "เมื่อลูกค้าเข้าใจและยินยอม", "หลังอธิบายบางส่วน", "เมื่อมีเวลาน้อย"] },
+            { q: "16. ข้อใดไม่ใช่ข้อดีของการขายทางโทรศัพท์", a: "C", choices: ["ต้นทุนต่ำ", "เข้าถึงลูกค้าได้เร็ว", "เห็นหน้าลูกค้า", "ประหยัดเวลา"] },
+            { q: "17. หากลูกค้าปฏิเสธควรทำอย่างไร", a: "D", choices: ["วางสายทันที", "เสนอแผนอื่นทันที", "ขอให้ซื้อเลย", "ฟังเหตุผลและตอบข้อโต้แย้งอย่างสุภาพ"] },
+            { q: "18. สิ่งใดไม่ควรทำระหว่างพูดโทรศัพท์", a: "A", choices: ["เคี้ยวขณะพูด", "อยู่ในที่เงียบ", "ใช้หูฟัง", "พูดให้ชัดถ้อยชัดคำ"] },
+            { q: "19. อะไรสื่อถึงความเป็นมืออาชีพ", a: "C", choices: ["พูดเร็ว", "อ่านสคริปต์เท่านั้น", "ปรับเนื้อหาให้เหมาะกับลูกค้า", "พูดแต่เรื่องราคา"] },
+            { q: "20. ประกันสะสมทรัพย์เหมาะกับใคร", a: "B", choices: ["คนมีรายได้ต่ำ", "ผู้ที่ต้องการออมระยะยาวและมีความคุ้มครอง", "เด็กเล็ก", "ผู้สูงอายุที่ไม่มีรายได้"] },
+            { q: "21. คำพูดเปิดการโทรควรเป็นอย่างไร", a: "A", choices: ["สุภาพและชัดเจน", "ดุดันและมั่นใจ", "พูดให้จบเร็ว", "อ่านตามบทพูดอย่างเดียว"] },
+            { q: "22. หากลูกค้าบอกว่าไม่มีเวลา ควรทำอย่างไร", a: "C", choices: ["พูดต่อทันที", "ตื๊อให้จบ", "ขอนัดเวลาใหม่", "วางสายไปเลย"] },
+            { q: "23. การเสนอประกันแบบเร่งรีบมีผลอย่างไร", a: "D", choices: ["ลูกค้าซื้อทันที", "เข้าใจง่าย", "รู้สึกประทับใจ", "อาจทำให้ลูกค้าไม่เชื่อมั่น"] },
+            { q: "24. ควรใช้ถ้อยคำอย่างไรเมื่ออธิบายกรมธรรม์", a: "B", choices: ["ศัพท์เทคนิคมาก ๆ", "ภาษาง่าย ๆ เข้าใจง่าย", "ใช้คำยาว ๆ", "แค่บอกชื่อแผน"] },
+            { q: "25. ประโยชน์ของเบี้ยประกันที่ลูกค้าจ่ายคืออะไร", a: "A", choices: ["เป็นค่าคุ้มครองและสะสมทรัพย์", "เป็นค่าปรับ", "ไม่มีประโยชน์", "จ่ายให้ตัวแทน"] },
+            { q: "26. การจดบันทึกระหว่างสนทนาช่วยได้อย่างไร", a: "C", choices: ["ไม่จำเป็น", "เสียเวลา", "ติดตามลูกค้าได้ดีขึ้น", "ทำให้ลืม"] },
+            { q: "27. แนวทางตอบข้อโต้แย้งของลูกค้าคืออะไร", a: "D", choices: ["หลีกเลี่ยงการตอบ", "พูดให้จบไว", "พูดวกไปวนมา", "ฟังและตอบด้วยเหตุผลที่ตรงประเด็น"] },
+            { q: "28. เมื่อลูกค้าถามเรื่องภาษี ควรตอบอย่างไร", a: "B", choices: ["ไม่ต้องรู้หรอก", "สามารถลดหย่อนภาษีได้ตามเงื่อนไขของกรมสรรพากร", "ไม่เกี่ยวกับกรมธรรม์", "ขึ้นกับดวง"] },
+            { q: "29. ทำไมต้องเก็บข้อมูลลูกค้าอย่างเป็นระบบ", a: "C", choices: ["เพื่อลืมง่าย", "เพื่อโทรซ้ำโดยไม่รู้ตัว", "เพื่อติดตามผลและบริการภายหลัง", "เพื่อให้ข้อมูลซ้ำ ๆ"] },
+            { q: "30. การตั้งเป้าหมายในการขายมีความสำคัญอย่างไร", a: "A", choices: ["ช่วยวางแผนการทำงาน", "ไม่มีผล", "ทำให้เครียด", "ไม่จำเป็น"] },
+            { q: "31. การใช้คำถามเปิดในการพูดคุยช่วยอย่างไร", a: "B", choices: ["ทำให้ลูกค้ารู้สึกกดดัน", "ทำให้รู้ความต้องการลูกค้า", "เสียเวลา", "ทำให้ลูกค้าโกรธ"] },
+            { q: "32. การใช้ภาษาที่เข้าใจง่ายสำคัญอย่างไร", a: "A", choices: ["ทำให้ลูกค้าเข้าใจง่ายขึ้น", "ทำให้ลูกค้าสับสน", "ไม่มีความหมาย", "ทำให้ดูไม่เป็นมืออาชีพ"] },
+            { q: "33. เมื่อไหร่ควรเริ่มอธิบายผลประโยชน์", a: "C", choices: ["ทันทีที่โทร", "เมื่อจบการพูด", "เมื่อเข้าใจความต้องการลูกค้า", "เมื่อหมดเวลาพูด"] },
+            { q: "34. การฟังอย่างตั้งใจช่วยอะไร", a: "D", choices: ["ทำให้เสียงดังขึ้น", "ลดเวลาพูด", "ไม่สำคัญ", "เข้าใจลูกค้ามากขึ้น"] },
+            { q: "35. วิธีจัดการกับคำถามยากของลูกค้าคืออะไร", a: "B", choices: ["ตอบไปก่อนโดยไม่คิด", "ขอเวลาตรวจสอบข้อมูล", "เลี่ยงไม่ตอบ", "วางสาย"] },
+            { q: "36. การสร้างความน่าเชื่อถือทำได้โดยวิธีใด", a: "A", choices: ["แนะนำตัวอย่างชัดเจน", "พูดเร็ว", "ไม่สนใจลูกค้า", "พูดให้จบเร็ว"] },
+            { q: "37. คำถามประเภทไหนช่วยให้ลูกค้าพูดมากขึ้น", a: "C", choices: ["คำถามปลายปิด", "คำถามใช่/ไม่ใช่", "คำถามเปิด", "คำถามเดี่ยว"] },
+            { q: "38. การสรุปเนื้อหาในการพูดสำคัญอย่างไร", a: "D", choices: ["ไม่สำคัญ", "ทำให้เสียเวลา", "ทำให้ลูกค้าเบื่อ", "ช่วยให้เข้าใจตรงกัน"] },
+            { q: "39. วิธีปฏิเสธลูกค้าอย่างสุภาพควรทำอย่างไร", a: "B", choices: ["ตัดบททันที", "แสดงความเข้าใจและขอบคุณ", "พูดเสียงดัง", "วางสายทันที"] },
+            { q: "40. เมื่อปิดการขายแล้ว ควรทำอะไรต่อ", a: "C", choices: ["เลิกงานทันที", "ไม่ต้องติดต่อลูกค้าอีก", "ติดตามผลและบริการหลังการขาย", "เปลี่ยนสายงาน"] },
+            { q: "41. ข้อใดเป็นประโยชน์ของประกันสุขภาพ", a: "B", choices: ["เพิ่มหนี้สิน", "ช่วยลดภาระค่ารักษาพยาบาล", "ไม่มีประโยชน์", "เพิ่มความเสี่ยง"] },
+            { q: "42. การอธิบายแผนประกันควรเน้นจุดใด", a: "C", choices: ["ราคาเพียงอย่างเดียว", "คำพูดทางเทคนิค", "ผลประโยชน์และความคุ้มครอง", "ความยาวของกรมธรรม์"] },
+            { q: "43. คำพูดที่ควรหลีกเลี่ยงในการโทรขายคืออะไร", a: "A", choices: ["คำหยาบ", "คำสุภาพ", "คำถามเปิด", "คำชม"] },
+            { q: "44. การรับฟังความคิดเห็นลูกค้าช่วยอย่างไร", a: "D", choices: ["ทำให้เสียเวลา", "ลดความน่าเชื่อถือ", "ทำให้ลูกค้ารู้สึกไม่ดี", "สร้างความสัมพันธ์ที่ดี"] },
