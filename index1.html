@@ -72,7 +72,7 @@
     <h2>หน้าที่ 1: ข้อมูลผู้เข้าสอบ</h2>
     <div id="datetime">กำลังโหลดวันที่และเวลา...</div>
 
-    <form id="userForm" action="process.php" method="post">
+    <form id="userForm">
         <label>ชื่อ (ภาษาไทย):</label>
         <input type="text" id="fname" name="fname" required />
 
@@ -111,15 +111,28 @@
             });
         });
 
-        // โค้ดที่เพิ่มเข้าไป: เมื่อกดปุ่มส่งฟอร์ม จะบันทึกชื่อ-นามสกุลใน localStorage
-        // โค้ดที่แก้ไขแล้ว
-document.getElementById('userForm').addEventListener('submit', function(event) {
-    const fname_en = document.getElementById('fname_en').value;
-    const lname_en = document.getElementById('lname_en').value;
-    // ใช้เครื่องหมายขีดล่าง _
-    const fullNameEn = fname_en.trim() + "_" + lname_en.trim();
-localStorage.setItem('userFullName', fullNameEn);
-});
+        // โค้ดที่แก้ไข: เมื่อกดปุ่ม submit จะบันทึกข้อมูลและเปลี่ยนหน้า
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            // ป้องกันไม่ให้ฟอร์มส่งข้อมูลและเปลี่ยนหน้าเอง
+            event.preventDefault(); 
+
+            // เก็บข้อมูลที่จำเป็นลงใน localStorage
+            const data = {
+                fname: document.getElementById('fname').value,
+                lname: document.getElementById('lname').value,
+                fname_en: document.getElementById('fname_en').value,
+                lname_en: document.getElementById('lname_en').value,
+                position: document.getElementById('position').value,
+                campaign: document.getElementById('campaign').value
+            };
+            
+            // แปลงข้อมูลเป็น string และเก็บไว้ใน localStorage
+            localStorage.setItem('userData', JSON.stringify(data));
+
+            // เปลี่ยนหน้าไปยัง Page2.html
+            window.location.href = 'Page2.html';
+        });
     </script>
 </body>
 </html>
+
