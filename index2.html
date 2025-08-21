@@ -205,7 +205,7 @@
                     // แก้ไขเกณฑ์การผ่าน
                     if (score >= 40) { 
                         alert(`คุณได้คะแนน ${score} จาก ${questions.length} คะแนน ยินดีด้วย คุณผ่านเกณฑ์แล้ว!`);
-                        window.location.href = 'page3.html';
+                        window.location.href = 'index3.html';
                     } else {
                         alert(`คุณได้คะแนน ${score} จาก ${questions.length} คะแนน ซึ่งไม่ผ่านเกณฑ์ (40 ข้อ)`);
                         resultDiv.textContent = `คะแนนของคุณคือ: ${score} จาก ${questions.length} คะแนน`;
@@ -226,4 +226,5 @@
         submitBtn.addEventListener("click", gradeAndSaveQuiz);
     </script>
 </body>
+
 </html>
