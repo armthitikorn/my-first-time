@@ -95,16 +95,6 @@
             transform: scale(1);
             opacity: 1;
         }
-        .certificate-container::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border: 2px solid #005fa3;
-            pointer-events: none;
-        }
         .close-btn {
             position: absolute;
             top: 15px;
@@ -125,12 +115,6 @@
             color: #333;
             font-size: 1.5em;
             margin-bottom: 30px;
-        }
-        .certificate-body {
-            font-size: 1.2em;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 40px;
         }
         .name {
             font-size: 2.2em;
@@ -335,7 +319,7 @@
         const quizScore = localStorage.getItem('quizScore');
 
         // ตรวจสอบว่ามีข้อมูลผู้ใช้หรือไม่ ถ้าไม่มี ให้กลับไปหน้าแรก
-        if (!userData || !userData.fname || !quizScore) {
+        if (!userData || !userData.fname_th || !quizScore) {
             alert('ไม่พบข้อมูลการทดสอบ กรุณาทำแบบทดสอบให้ครบถ้วน');
             window.location.href = 'index.html';
         }
@@ -364,7 +348,7 @@
             localStorage.setItem('essayAnswers', JSON.stringify(essayAnswers));
             
             // แสดงข้อมูลในใบประกาศ
-            const fullName = `${userData.fname} ${userData.lname}`;
+            const fullName = `${userData.fname_th} ${userData.lname_th}`;
             userNameElement.textContent = fullName;
             finalScoreElement.textContent = `${quizScore} / 50 คะแนน`;
 
@@ -380,15 +364,13 @@
         });
 
         closeBtn.addEventListener('click', function() {
-            // ซ่อนป๊อปอัพและกลับไปหน้าแรก
+            // ซ่อนป๊อปอัพและไปหน้าแดชบอร์ด
             popupOverlay.classList.remove('show');
             setTimeout(() => {
                 popupOverlay.style.display = 'none';
-                window.location.href = 'index.html';
+                window.location.href = 'index4.html';
             }, 300);
         });
     </script>
 </body>
 </html>
-
-
