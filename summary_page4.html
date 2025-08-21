@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>สรุปผลแบบทดสอบ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            padding: 30px;
+            max-width: 800px;
+            margin: auto;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            color: #0059b3;
+        }
+        .section {
+            background: #ffffff;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.1);
+        }
+        .section h3 {
+            color: #007acc;
+            margin-top: 0;
+        }
+        .info, .score, .answers {
+            line-height: 1.6;
+        }
+        .audio-list audio {
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h2>หน้าที่ 4: สรุปผลแบบทดสอบ</h2>
+
+    <div class="section">
+        <h3>ข้อมูลผู้เข้าสอบ</h3>
+        <div class="info" id="userInfo">กำลังโหลด...</div>
+    </div>
+
+    <div class="section">
+        <h3>คะแนนจากแบบทดสอบ</h3>
+        <div class="score" id="scoreSummary">กำลังโหลด...</div>
+    </div>
+
+    <div class="section">
+        <h3>คำตอบเสียงที่บันทึกไว้</h3>
+        <div class="answers audio-list" id="audioAnswers">กำลังโหลด...</div>
+    </div>
+
+    <script>
+        // Load user info from localStorage
+        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+        const userInfoDiv = document.getElementById('userInfo');
+        if (userData.fname) {
+            userInfoDiv.innerHTML = `
+                <strong>ชื่อ:</strong> ${userData.fname} ${userData.lname}<br>
+                <strong>ชื่อ (EN):</strong> ${userData.fname_en} ${userData.lname_en}<br>
+                <strong>ตำแหน่ง:</strong> ${userData.position}<br>
+                <strong>แคมเปญ:</strong> ${userData.campaign}
+            `;
+        } else {
+            userInfoDiv.textContent = "ไม่พบข้อมูลผู้เข้าสอบ";
+        }
+
+        // Load score summary from localStorage
+        const scoreData = JSON.parse(localStorage.getItem('scoreData') || '{}');
+        const scoreDiv = document.getElementById('scoreSummary');
+        if (scoreData.totalScore !== undefined) {
+            scoreDiv.innerHTML = `
+                <strong>คะแนนรวม:</strong> ${scoreData.totalScore} คะแนน<br>
+                <strong>รายละเอียด:</strong><br>
+                ${scoreData.details ? scoreData.details.map((s, i) => `ข้อ ${i+1}: ${s} คะแนน`).join('<br>') : ''}
+            `;
+        } else {
+            scoreDiv.textContent = "ไม่พบข้อมูลคะแนน";
+        }
+
+        // Load audio answers from localStorage
+        const audioDiv = document.getElementById('audioAnswers');
+        const audioAnswers = JSON.parse(localStorage.getItem('audioAnswers') || '[]');
+        if (audioAnswers.length > 0) {
+            audioDiv.innerHTML = audioAnswers.map((url, i) => `
+                <strong>คำถามที่ ${i+1}</strong><br>
+                <audio controls src="${url}"></audio>
+            `).join('');
+        } else {
+            audioDiv.textContent = "ไม่พบไฟล์เสียงที่บันทึกไว้";
+        }
+    </script>
+</body>
+</html>
