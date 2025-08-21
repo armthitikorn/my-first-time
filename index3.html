@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>แบบทดสอบอัตนัย</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Sarabun', sans-serif;
@@ -60,6 +61,146 @@
         }
         button:hover {
             background-color: #005fa3;
+        }
+
+        /* --- Popup and Certificate Styles --- */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none; /* เริ่มต้นซ่อนไว้ */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .certificate-container {
+            width: 95%;
+            max-width: 900px;
+            min-height: 600px;
+            background-color: #ffffff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            padding: 40px;
+            box-sizing: border-box;
+            border: 10px solid #007acc;
+            text-align: center;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .popup-overlay.show .certificate-container {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .certificate-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 2px solid #005fa3;
+            pointer-events: none;
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 30px;
+            color: #555;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .certificate-header {
+            color: #0059b3;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        .certificate-subtitle {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
+        .certificate-body {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 40px;
+        }
+        .name {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #004080;
+            margin: 20px 0;
+            border-bottom: 2px dashed #ccc;
+            display: inline-block;
+            padding: 0 20px;
+        }
+        .score-box {
+            background-color: #e6f7ff;
+            padding: 15px 30px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 1.4em;
+            color: #007acc;
+            font-weight: bold;
+        }
+        .signature {
+            margin-top: 50px;
+            font-size: 1.1em;
+            color: #777;
+        }
+        .signature-line {
+            width: 250px;
+            height: 1px;
+            background-color: #333;
+            margin: 10px auto;
+        }
+        .print-btn {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1em;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 30px;
+        }
+        .print-btn:hover {
+            background-color: #005fa3;
+        }
+
+        /* --- Media Print for printing only --- */
+        @media print {
+            body {
+                background-color: #fff;
+            }
+            .certificate-container {
+                box-shadow: none;
+                border: 5px solid #007acc;
+            }
+            .popup-overlay, .close-btn, .print-btn, h2, form, button {
+                display: none !important;
+            }
+            .certificate-container {
+                display: block; /* Make sure certificate is visible for print */
+                position: static;
+                transform: none;
+                opacity: 1;
+                margin: 0;
+                width: 100%;
+                padding: 0;
+            }
+            body > *:not(.certificate-container) {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -148,29 +289,63 @@
                 <textarea id="q20" name="q20" required></textarea>
             </div>
         </div>
-        <button id="submitBtn" type="submit">ส่งคำตอบและไปหน้าสุดท้าย</button>
+        <button id="submitBtn" type="submit">ส่งคำตอบ</button>
     </form>
+
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="certificate-container" id="certificate">
+            <span class="close-btn" id="closeBtn">&times;</span>
+            <div class="certificate-header">ใบประกาศนียบัตร</div>
+            <div class="certificate-subtitle">มอบให้เพื่อเป็นเกียรติแก่</div>
+            
+            <div class="name" id="userName">คุณ (ชื่อ-นามสกุล)</div>
+            
+            <div class="certificate-body">
+                ที่ได้ผ่านการทดสอบความรู้<br>
+                **"การขายประกันชีวิตและสุขภาพผ่านทางโทรศัพท์"**
+            </div>
+            
+            <div class="score-box">
+                คะแนนสอบ: <span id="finalScore">กำลังโหลด...</span>
+            </div>
+            
+            <div class="signature">
+                <div class="signature-line"></div>
+                <p>ผู้จัดการฝ่ายฝึกอบรม</p>
+                <p>บริษัท XXX ประกันภัย</p>
+                <p>วันที่: <span id="currentDate"></span></p>
+            </div>
+            
+            <button class="print-btn" onclick="window.print()">พิมพ์ใบประกาศ</button>
+        </div>
+    </div>
     
     <script>
         const form = document.getElementById('essayForm');
         const submitBtn = document.getElementById('submitBtn');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const closeBtn = document.getElementById('closeBtn');
+
+        const userNameElement = document.getElementById('userName');
+        const finalScoreElement = document.getElementById('finalScore');
+        const currentDateElement = document.getElementById('currentDate');
         
-        // ดึงข้อมูลผู้ใช้จาก localStorage ที่บันทึกไว้ใน page1
+        // ดึงข้อมูลผู้ใช้และคะแนนจาก localStorage ที่บันทึกไว้ก่อนหน้า
         const userData = JSON.parse(localStorage.getItem('userData'));
+        const quizScore = localStorage.getItem('quizScore');
 
         // ตรวจสอบว่ามีข้อมูลผู้ใช้หรือไม่ ถ้าไม่มี ให้กลับไปหน้าแรก
-        if (!userData || !userData.fname_en) {
+        if (!userData || !userData.fname || !quizScore) {
+            alert('ไม่พบข้อมูลการทดสอบ กรุณาทำแบบทดสอบให้ครบถ้วน');
             window.location.href = 'index.html';
         }
 
         submitBtn.addEventListener('click', function(event) {
-            // ป้องกันไม่ให้ฟอร์มส่งข้อมูลและเปลี่ยนหน้าเอง
             event.preventDefault();
 
             const essayAnswers = {};
             let allAnswered = true;
 
-            // ตรวจสอบว่าผู้ใช้ตอบคำถามครบทุกข้อหรือไม่
             for (let i = 1; i <= 20; i++) {
                 const textarea = document.getElementById(`q${i}`);
                 if (textarea.value.trim() === '') {
@@ -185,30 +360,35 @@
                 return;
             }
 
-            // ดึงข้อมูลคำตอบปรนัย (ถ้ามี)
-            const quizResultString = localStorage.getItem(`quizResult_${userData.fname_en}_${userData.lname_en}`);
-            let quizResult = {};
-            if (quizResultString) {
-                quizResult = JSON.parse(quizResultString);
-            }
-
-            // รวมข้อมูลทั้งหมด (ข้อมูลผู้ใช้, คำตอบปรนัย, คำตอบอัตนัย)
-            const finalData = {
-                userData: userData,
-                quiz: quizResult,
-                essayAnswers: essayAnswers,
-                timestamp: new Date().toISOString()
-            };
+            // บันทึกคำตอบอัตนัยลงใน localStorage
+            localStorage.setItem('essayAnswers', JSON.stringify(essayAnswers));
             
-            // บันทึกข้อมูลทั้งหมดลงใน localStorage
-            const storageKey = `finalSubmission_${userData.fname_en}_${userData.lname_en}`;
-            localStorage.setItem(storageKey, JSON.stringify(finalData));
+            // แสดงข้อมูลในใบประกาศ
+            const fullName = `${userData.fname} ${userData.lname}`;
+            userNameElement.textContent = fullName;
+            finalScoreElement.textContent = `${quizScore} / 50 คะแนน`;
 
-            // แจ้งให้ผู้ใช้ทราบและเปลี่ยนหน้า
-            alert('ส่งคำตอบเรียบร้อยแล้ว');
-            window.location.href = 'index.html';
+            const today = new Date();
+            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+            currentDateElement.textContent = today.toLocaleDateString('th-TH', dateOptions);
+
+            // แสดงป๊อปอัพ
+            popupOverlay.style.display = 'flex';
+            setTimeout(() => {
+                popupOverlay.classList.add('show');
+            }, 10);
+        });
+
+        closeBtn.addEventListener('click', function() {
+            // ซ่อนป๊อปอัพและกลับไปหน้าแรก
+            popupOverlay.classList.remove('show');
+            setTimeout(() => {
+                popupOverlay.style.display = 'none';
+                window.location.href = 'index.html';
+            }, 300);
         });
     </script>
 </body>
 </html>
+
 
