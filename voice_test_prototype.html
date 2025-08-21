@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>แบบทดสอบเสียง</title>
+    <style>
+        body {
+            font-family: 'Tahoma', sans-serif;
+            background-color: #f0f8ff;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #downloadLink {
+            display: none;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>แบบทดสอบ: อัดเสียงคำตอบ</h1>
+    <p>กรุณากดปุ่มเพื่อเริ่มอัดเสียงคำตอบของคุณ</p>
+    <button id="startBtn">🎙️ เริ่มอัดเสียง</button>
+    <button id="stopBtn">⏹️ หยุดอัดเสียง</button>
+    <br>
+    <a id="downloadLink">ดาวน์โหลดเสียงที่อัด</a>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+
+        document.getElementById('startBtn').onclick = async () => {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+            mediaRecorder.start();
+
+            mediaRecorder.ondataavailable = e => {
+                audioChunks.push(e.data);
+            };
+        };
+
+        document.getElementById('stopBtn').onclick = () => {
+            mediaRecorder.stop();
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const downloadLink = document.getElementById('downloadLink');
+                downloadLink.href = audioUrl;
+                downloadLink.download = 'voice_answer.webm';
+                downloadLink.style.display = 'inline';
+                downloadLink.textContent = '📥 ดาวน์โหลดเสียงที่อัด';
+            };
+        };
+    </script>
+</body>
+</html>
