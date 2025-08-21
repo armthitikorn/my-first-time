@@ -139,10 +139,12 @@
         const form = document.getElementById("quizForm");
         const submitBtn = document.getElementById("submitBtn");
         const resultDiv = document.getElementById("result");
-        let userFullName = localStorage.getItem('userFullName');
+        const userData = JSON.parse(localStorage.getItem('userData')); // แก้ไขตรงนี้
 
-        if (!userFullName) {
-            window.location.href = 'index3.html';
+        // แก้ไข: ตรวจสอบว่ามีข้อมูลผู้ใช้หรือไม่ ถ้าไม่มี ให้กลับไปหน้าแรก
+        if (!userData || !userData.fname_th) {
+            alert("ไม่พบข้อมูลผู้ใช้ กรุณากรอกข้อมูลก่อนเริ่มทำแบบทดสอบ");
+            window.location.href = 'index.html';
         }
 
         function createQuiz() {
@@ -189,13 +191,13 @@
                 return;
             }
 
-            // --- เพิ่มโค้ดส่วนนี้เพื่อบันทึกคะแนนลง localStorage ---
+            // บันทึกคะแนนลง localStorage
             localStorage.setItem('quizScore', score);
 
             // ส่งคะแนนและคำตอบไปยัง save_multiple_choice.php (ตามโค้ดเดิม)
             const formData = new FormData();
             formData.append('score', score);
-            formData.append('userFullName', userFullName);
+            formData.append('userFullName', `${userData.fname_th} ${userData.lname_th}`);
             formData.append('answers', JSON.stringify(userAnswers));
             
             fetch('save_multiple_choice.php', {
@@ -205,10 +207,10 @@
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    if (score >= 40) { 
+                    if (score >= 40) {
                         alert(`คุณได้คะแนน ${score} จาก ${questions.length} คะแนน ยินดีด้วย คุณผ่านเกณฑ์แล้ว!`);
-                        // ✨ เปลี่ยนเส้นทางไป index3.html แทน
-                        window.location.href = 'index3.html'; 
+                        // เปลี่ยนเส้นทางไป index3.html แทน
+                        window.location.href = 'index3.html';
                     } else {
                         alert(`คุณได้คะแนน ${score} จาก ${questions.length} คะแนน ซึ่งไม่ผ่านเกณฑ์ (40 ข้อ)`);
                         resultDiv.textContent = `คะแนนของคุณคือ: ${score} จาก ${questions.length} คะแนน`;
@@ -230,6 +232,7 @@
     </script>
 </body>
 </html>
+
 
 
 
