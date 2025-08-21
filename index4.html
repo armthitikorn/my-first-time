@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -29,13 +28,20 @@
             color: #007acc;
             margin-top: 0;
         }
-        .info, .score, .answers {
+        .info, .score, .answers, .essay-answers {
             line-height: 1.6;
         }
         .audio-list audio {
             display: block;
             margin-top: 5px;
             margin-bottom: 15px;
+        }
+        .essay-item {
+            margin-bottom: 15px;
+        }
+        .essay-item strong {
+            display: block;
+            color: #555;
         }
     </style>
 </head>
@@ -48,8 +54,13 @@
     </div>
 
     <div class="section">
-        <h3>คะแนนจากแบบทดสอบ</h3>
+        <h3>คะแนนจากแบบทดสอบปรนัย</h3>
         <div class="score" id="scoreSummary">กำลังโหลด...</div>
+    </div>
+
+    <div class="section">
+        <h3>คำตอบจากแบบทดสอบอัตนัย</h3>
+        <div class="essay-answers" id="essayAnswers">กำลังโหลด...</div>
     </div>
 
     <div class="section">
@@ -58,7 +69,7 @@
     </div>
 
     <script>
-        // Load user info from localStorage
+        // โหลดข้อมูลผู้ใช้จาก localStorage
         const userData = JSON.parse(localStorage.getItem('userData') || '{}');
         const userInfoDiv = document.getElementById('userInfo');
         if (userData.fname) {
@@ -72,20 +83,40 @@
             userInfoDiv.textContent = "ไม่พบข้อมูลผู้เข้าสอบ";
         }
 
-        // Load score summary from localStorage
-        const scoreData = JSON.parse(localStorage.getItem('scoreData') || '{}');
+        // โหลดคะแนนปรนัยจาก localStorage
+        const quizScore = localStorage.getItem('quizScore');
         const scoreDiv = document.getElementById('scoreSummary');
-        if (scoreData.totalScore !== undefined) {
+        if (quizScore !== null) {
             scoreDiv.innerHTML = `
-                <strong>คะแนนรวม:</strong> ${scoreData.totalScore} คะแนน<br>
-                <strong>รายละเอียด:</strong><br>
-                ${scoreData.details ? scoreData.details.map((s, i) => `ข้อ ${i+1}: ${s} คะแนน`).join('<br>') : ''}
+                คะแนนของคุณคือ: <span style="font-size: 1.5em; color: #007acc;">${quizScore}</span> จาก 50 คะแนน
             `;
         } else {
             scoreDiv.textContent = "ไม่พบข้อมูลคะแนน";
         }
 
-        // Load audio answers from localStorage
+        // โหลดคำตอบอัตนัยจาก localStorage
+        const essayAnswersDiv = document.getElementById('essayAnswers');
+        const essayAnswers = JSON.parse(localStorage.getItem('essayAnswers') || '{}');
+        const essayKeys = Object.keys(essayAnswers);
+
+        if (essayKeys.length > 0) {
+            let html = '';
+            essayKeys.forEach((key, index) => {
+                const questionNumber = index + 1;
+                const answerText = essayAnswers[key];
+                html += `
+                    <div class="essay-item">
+                        <strong>คำถามที่ ${questionNumber}:</strong>
+                        <p>${answerText}</p>
+                    </div>
+                `;
+            });
+            essayAnswersDiv.innerHTML = html;
+        } else {
+            essayAnswersDiv.textContent = "ไม่พบข้อมูลคำตอบอัตนัย";
+        }
+
+        // โหลดไฟล์เสียงที่บันทึกไว้จาก localStorage (ไม่มีการเปลี่ยนแปลง)
         const audioDiv = document.getElementById('audioAnswers');
         const audioAnswers = JSON.parse(localStorage.getItem('audioAnswers') || '[]');
         if (audioAnswers.length > 0) {
