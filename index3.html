@@ -300,77 +300,123 @@
                 <p>วันที่: <span id="currentDate"></span></p>
             </div>
             
-            <button class="print-btn" onclick="window.print()">พิมพ์ใบประกาศ</button>
-        </div>
+            <button id="submitBtn" type="submit">ส่งคำตอบ</button>
+  </form>
+
+  <!-- ป๊อปอัพ -->
+  <div id="popupOverlay" aria-hidden="true">
+    <div class="popup-content">
+      <h2>ผลการทดสอบ</h2>
+      <p>ชื่อผู้ใช้: <span id="userName"></span></p>
+      <p>คะแนน: <span id="finalScore"></span></p>
+      <p>วันที่: <span id="currentDate"></span></p>
+      <button id="printBtn">พิมพ์ผลลัพธ์</button>
+      <button id="nextBtn">ถัดไป</button>
+      <button id="closeBtn">ปิด</button>
     </div>
-    
-    <script>
-        const form = document.getElementById('essayForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const popupOverlay = document.getElementById('popupOverlay');
-        const closeBtn = document.getElementById('closeBtn');
+  </div>
 
-        const userNameElement = document.getElementById('userName');
-        const finalScoreElement = document.getElementById('finalScore');
-        const currentDateElement = document.getElementById('currentDate');
-        
-        // ดึงข้อมูลผู้ใช้และคะแนนจาก localStorage ที่บันทึกไว้ก่อนหน้า
-        const userData = JSON.parse(localStorage.getItem('userData'));
-        const quizScore = localStorage.getItem('quizScore');
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('essayForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const popupOverlay = document.getElementById('popupOverlay');
+      const closeBtn = document.getElementById('closeBtn');
+      const printBtn = document.getElementById('printBtn');
+      const nextBtn = document.getElementById('nextBtn');
 
-        // ตรวจสอบว่ามีข้อมูลผู้ใช้หรือไม่ ถ้าไม่มี ให้กลับไปหน้าแรก
-        if (!userData || !userData.fname_th || !quizScore) {
-            alert('ไม่พบข้อมูลการทดสอบ กรุณาทำแบบทดสอบให้ครบถ้วน');
-            window.location.href = 'index.html';
+      const userNameElement = document.getElementById('userName');
+      const finalScoreElement = document.getElementById('finalScore');
+      const currentDateElement = document.getElementById('currentDate');
+
+      const userData = JSON.parse(localStorage.getItem('userData') || 'null');
+      const quizScore = localStorage.getItem('quizScore');
+
+      if (!userData || !userData.fname_th || !quizScore) {
+        alert('ไม่พบข้อมูลการทดสอบ กรุณาทำแบบทดสอบให้ครบถ้วน');
+        window.location.href = 'index1.html';
+        return;
+      }
+
+      submitBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const essayAnswers = {};
+        let allAnswered = true;
+
+        for (let i = 1; i <= 20; i++) {
+          const textarea = document.getElementById(`q${i}`);
+          if (!textarea || textarea.value.trim() === '') {
+            allAnswered = false;
+            break;
+          }
+          essayAnswers[`q${i}`] = textarea.value.trim();
         }
 
-        submitBtn.addEventListener('click', function(event) {
-            event.preventDefault();
+        if (!allAnswered) {
+          alert('กรุณาตอบคำถามให้ครบทุกข้อก่อนส่งคำตอบ');
+          return;
+        }
 
-            const essayAnswers = {};
-            let allAnswered = true;
+        localStorage.setItem('essayAnswers', JSON.stringify(essayAnswers));
 
-            for (let i = 1; i <= 20; i++) {
-                const textarea = document.getElementById(`q${i}`);
-                if (textarea.value.trim() === '') {
-                    allAnswered = false;
-                    break;
-                }
-                essayAnswers[`q${i}`] = textarea.value.trim();
-            }
+        const fullName = `${userData.fname_th} ${userData.lname_th || ''}`.trim();
+        userNameElement.textContent = fullName;
+        finalScoreElement.textContent = `${quizScore} / 50 คะแนน`;
 
-            if (!allAnswered) {
-                alert('กรุณาตอบคำถามให้ครบทุกข้อก่อนส่งคำตอบ');
-                return;
-            }
+        const today = new Date();
+        const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        currentDateElement.textContent = today.toLocaleDateString('th-TH', dateOptions);
 
-            // บันทึกคำตอบอัตนัยลงใน localStorage
-            localStorage.setItem('essayAnswers', JSON.stringify(essayAnswers));
-            
-            // แสดงข้อมูลในใบประกาศ
-            const fullName = `${userData.fname_th} ${userData.lname_th}`;
-            userNameElement.textContent = fullName;
-            finalScoreElement.textContent = `${quizScore} / 50 คะแนน`;
-
-            const today = new Date();
-            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-            currentDateElement.textContent = today.toLocaleDateString('th-TH', dateOptions);
-
-            // แสดงป๊อปอัพ
-            popupOverlay.style.display = 'flex';
-            setTimeout(() => {
-                popupOverlay.classList.add('show');
-            }, 10);
+        popupOverlay.style.display = 'flex';
+        requestAnimationFrame(() => {
+          popupOverlay.classList.add('show');
+          popupOverlay.setAttribute('aria-hidden', 'false');
         });
+      });
 
-        closeBtn.addEventListener('click', function() {
-            // ซ่อนป๊อปอัพและไปหน้าแดชบอร์ด
-            popupOverlay.classList.remove('show');
-            setTimeout(() => {
-                popupOverlay.style.display = 'none';
-                window.location.href = 'index4.html';
-            }, 300);
-        });
-    </script>
+      closeBtn.addEventListener('click', () => {
+        popupOverlay.classList.remove('show');
+        popupOverlay.setAttribute('aria-hidden', 'true');
+        setTimeout(() => {
+          popupOverlay.style.display = 'none';
+          window.location.href = 'index4.html';
+        }, 300);
+      });
+
+      printBtn.addEventListener('click', () => window.print());
+      nextBtn.addEventListener('click', () => {
+        popupOverlay.classList.remove('show');
+        popupOverlay.setAttribute('aria-hidden', 'true');
+        setTimeout(() => {
+          popupOverlay.style.display = 'none';
+          window.location.href = 'index4.html';
+        }, 300);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && popupOverlay.classList.contains('show')) {
+          popupOverlay.classList.remove('show');
+          popupOverlay.setAttribute('aria-hidden', 'true');
+          setTimeout(() => {
+            popupOverlay.style.display = 'none';
+            window.location.href = 'index4.html';
+          }, 300);
+        }
+      });
+
+      popupOverlay.addEventListener('click', (e) => {
+        if (e.target === popupOverlay) {
+          popupOverlay.classList.remove('show');
+          popupOverlay.setAttribute('aria-hidden', 'true');
+          setTimeout(() => {
+            popupOverlay.style.display = 'none';
+            window.location.href = 'index4.html';
+          }, 300);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
+
